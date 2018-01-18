@@ -7,13 +7,31 @@
     "default_popup": "good.html",
     "default_icon": "good.png"
   },
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Shift+T",
-        "mac": "Shift+T"
+        "default": "Ctrl+1",
+        "mac": "MacCtrl+1"
       },
       "description": "Opens good.html"
+    },
+    "translate": {
+      "suggested_key": {
+        "default": "Ctrl+3",
+        "mac": "MacCtrl+3"
+      },
+      "description": "translate"
     }
-  }
+  },
+  "permissions": [   
+    "tabs",
+    "notifications",
+    "http://*/",
+    "https://*/", 
+    "activeTab"
+  ]
 }
