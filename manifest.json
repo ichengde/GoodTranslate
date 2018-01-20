@@ -14,14 +14,14 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+1",
+        "default": "Alt+1",
         "mac": "MacCtrl+1"
       },
       "description": "Opens good.html"
     },
     "translate": {
       "suggested_key": {
-        "default": "Ctrl+3",
+        "default": "Alt+3",
         "mac": "MacCtrl+3"
       },
       "description": "translate"
