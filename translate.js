@@ -50,30 +50,72 @@
     return c + (a.toString() + "." + (a ^ b))
   };
 
+  var stringifyPrimitive = function(v) {
+    switch (typeof v) {
+      case 'string':
+        return v;
+
+      case 'boolean':
+        return v ? 'true' : 'false';
+
+      case 'number':
+        return isFinite(v) ? v : '';
+
+      default:
+        return '';
+    }
+  };
+
+  var stringify  = function(obj, sep, eq, name) {
+    sep = sep || '&';
+    eq = eq || '=';
+    if (obj === null) {
+      obj = undefined;
+    }
+
+    if (typeof obj === 'object') {
+      return Object.keys(obj).map(function(k) {
+        var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+        if (Array.isArray(obj[k])) {
+          return obj[k].map(function(v) {
+            return ks + encodeURIComponent(stringifyPrimitive(v));
+          }).join(sep);
+        } else {
+          return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+        }
+      }).join(sep);
+
+    }
+
+    if (!name) return '';
+    return encodeURIComponent(stringifyPrimitive(name)) + eq +
+    encodeURIComponent(stringifyPrimitive(obj));
+  };
 
   var getTKK = function () {
     return new Promise(function (resolve, reject) {
       var now = Math.floor(Date.now() / 3600000);
 
-      if (Number(window.TKK.split('.')[0]) === now) {
+      if (window.TKK !== undefined && Number(window.TKK.split('.')[0]) === now) {
         resolve(window.TKK);
       } else {
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://translate.google.com');
+        request.open('GET', 'https://translate.google.cn');
 
         request.setRequestHeader('Content-Type', 'text/html; charset=UTF-8');
         request.onload = () => {
           if (request.status >= 200 && request.status < 400) {
-            var code = request.responseText.match(/TKK=(.*?)\(\)\)'\);/g);
-            if (code) {
-              eval(code[0]);
-              if (typeof TKK !== 'undefined') {
-                window.TKK = TKK;
-                localStorage.setItem('TKK', TKK);
-              }
-            }
+            var regex = new RegExp(/TKK=(.*?)\(\)\)'\);/g);
+var code = request.responseText.match(regex);
+if (code) {
+  eval(code[0]);
+  if (typeof TKK !== 'undefined') {
+    window.TKK = TKK;
+    localStorage.setItem('TKK', TKK);
+  }
+}
 
-            resolve(TKK)
+resolve(TKK);
           }
         }
 
@@ -82,12 +124,50 @@
         }
 
         request.send()
-      }).catch(function (err) {
-          var e = new Error();
-          e.code = 'BAD_NETWORK';
-          e.message = err.message;
-          reject(e);
-        });
+      }});
+  }
+
+  var  translate = function (text, token) {
+    return new Promise((resolve,reject)=>{
+      var url = 'https://translate.google.cn/translate_a/single';
+      var opts = {};
+      opts.from = 'auto';
+      opts.to = 'zh-CN';
+      var data = {
+        client: 't',
+        sl: opts.from,
+        tl: opts.to,
+        hl: opts.to,
+        dt: ['at', 'bd', 'ex', 'ld', 'md', 'qca', 'rw', 'rm', 'ss', 't'],
+        ie: 'UTF-8',
+        oe: 'UTF-8',
+        otf: 1,
+        ssel: 0,
+        tsel: 0,
+        kc: 7,
+        q: text
+      };
+
+
+      var request = new XMLHttpRequest();
+      url = url + '?' + stringify(data) + token;
+
+      request.open('GET', url);
+
+      request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      request.onload = () => {
+        if (request.status >= 200 && request.status < 400) {
+          const res = JSON.parse(request.responseText);
+          resolve(res);
+        }
+      }
+
+      request.onerror = function (error) {
+        reject(error)
+      }
+
+      request.send()
+
 
     });
   }
@@ -97,7 +177,9 @@
   var token = '';
   originText = window.getSelection().toString();
   getTKK().then(() => {
-     console.log(originText, wq(originText));
+    return translate(originText, wq(originText))
+  }).then(ans=>{
+    console.log(ans);
   });
 
 })();
