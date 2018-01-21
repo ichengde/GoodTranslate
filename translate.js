@@ -105,17 +105,17 @@
         request.setRequestHeader('Content-Type', 'text/html; charset=UTF-8');
         request.onload = () => {
           if (request.status >= 200 && request.status < 400) {
-            var regex = new RegExp(/TKK=(.*?)\(\)\)'\);/g);
-var code = request.responseText.match(regex);
-if (code) {
-  eval(code[0]);
-  if (typeof TKK !== 'undefined') {
-    window.TKK = TKK;
-    localStorage.setItem('TKK', TKK);
-  }
-}
+            var regex = /TKK=(.*?)\(\)\)'\)\;/g;
+            var code = request.responseText.match(regex);
+            if (code) {
+              eval(code[0]);
+              if (typeof TKK !== 'undefined') {
+                window.TKK = TKK;
+                localStorage.setItem('TKK', TKK);
+              }
+            }
 
-resolve(TKK);
+            resolve(TKK);
           }
         }
 
@@ -180,6 +180,18 @@ resolve(TKK);
     return translate(originText, wq(originText))
   }).then(ans=>{
     console.log(ans);
+    let ansText = '';
+    ans[0].forEach((as)=>{
+      if (as[0]) {
+        ansText += as[0] + ' ';
+      }
+    });
+    console.log();
+
+    var descriptionDom = document.createElement('div');
+    descriptionDom.style.color = 'red';
+    descriptionDom.innerHTML = ansText;
+    window.getSelection().baseNode.parentElement.appendChild(descriptionDom);
   });
 
 })();
