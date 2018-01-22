@@ -1,9 +1,21 @@
 ;(function(){
   function handle(command) {
-    console.log('Command:', command);
-    if (command === 'translate') {
-      chrome.tabs.executeScript(null,{
-        file: "translate.js"
+    var toLanguage = 'en';
+    if (command === 'translate-zh') {
+      toLanguage = 'zh-CN';
+    }
+
+    if (command === 'translate-en') {
+      toLanguage = 'en';
+    }
+
+    if (command.includes('translate')) {
+      chrome.storage.sync.set({
+        toLanguage: toLanguage,
+      }, function() {
+        chrome.tabs.executeScript(null,{
+          file: "translate.js"
+        });
       });
     }
   }

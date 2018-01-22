@@ -127,12 +127,12 @@
       }});
   }
 
-  var  translate = function (text, token) {
+  var  translate = function (text, toLang, token) {
     return new Promise((resolve,reject)=>{
       var url = 'https://translate.google.cn/translate_a/single';
       var opts = {};
       opts.from = 'auto';
-      opts.to = 'zh-CN';
+      opts.to = toLang;
       var data = {
         client: 't',
         sl: opts.from,
@@ -176,23 +176,27 @@
   var originText = '';
   var token = '';
   originText = window.getSelection().toString();
-  getTKK().then(() => {
-    return translate(originText, wq(originText))
-  }).then(ans=>{
-    console.log(ans);
-    let ansText = '';
-    ans[0].forEach((as)=>{
-      if (as[0]) {
-        ansText += as[0] + ' ';
-      }
+
+  chrome.storage.sync.get({
+    toLanguage: 'en'
+  }, function(storage) {
+    getTKK().then(() => {
+      return translate(originText, storage.toLanguage, wq(originText))
+    }).then(ans=>{
+      console.log(ans);
+      let ansText = '';
+      ans[0].forEach((as)=>{
+        if (as[0]) {
+          ansText += as[0] + ' ';
+        }
+      });
+      console.log();
+
+      var descriptionDom = document.createElement('div');
+      descriptionDom.style.color = 'red';
+      descriptionDom.innerHTML = ansText;
+      window.getSelection().baseNode.parentElement.appendChild(descriptionDom);
     });
-    console.log();
-
-    var descriptionDom = document.createElement('div');
-    descriptionDom.style.color = 'red';
-    descriptionDom.innerHTML = ansText;
-    window.getSelection().baseNode.parentElement.appendChild(descriptionDom);
   });
-
 })();
 
