@@ -172,18 +172,21 @@
     });
   };
   var domClassName = 'goodTranslatePlugin';
-  var showText = (parent, text) => {
+  var showText = (parentElement, text) => {
 
     var descriptionDom = document.createElement('div');
     descriptionDom.style.color = 'red';
     descriptionDom.classList.add(domClassName);
     descriptionDom.innerHTML = text;
-    parent.appendChild(descriptionDom);
+    parentElement.appendChild(descriptionDom);
 
   };
 
   var clearText = function() {
     var texts = document.querySelectorAll(domClassName);
+    for (var textItem = 0;textItem < texts.length;textItem++) {
+      texts[textItem].remove();
+    }
   };
 
 
@@ -194,6 +197,10 @@
   chrome.storage.sync.get({
     toLanguage: 'en'
   }, function(storage) {
+    if (storage.toLanguage === 'clear') {
+      clearText();
+      return;
+    }
     getTKK().then(() => {
       return translate(originText, storage.toLanguage, wq(originText))
     }).then(ans=>{
@@ -204,7 +211,6 @@
           ansText += as[0] + ' ';
         }
       });
-      console.log();
 
       showText(window.getSelection().baseNode.parentElement, ansText);
     });

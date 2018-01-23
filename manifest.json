@@ -1,5 +1,5 @@
 {
-  "name": "GoodTranslate",
+  "name": "GoodTranslator",
   "description" : "A Chrome Extension To Translate",
   "version": "0.0.1",
   "manifest_version": 2,
@@ -25,7 +25,15 @@
         "mac": "MacCtrl+2"
       },
       "description": "translate-en"
+    },
+    "clear": {
+      "suggested_key": {
+        "default": "Alt+3",
+        "mac": "MacCtrl+3"
+      },
+      "description": "clear"
     }
+
   },
   "permissions": [   
     "tabs",

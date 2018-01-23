@@ -9,6 +9,10 @@
       toLanguage = 'en';
     }
 
+    if (command === 'clear') {
+      toLanguage = 'clear';
+    }
+
     if (command.includes('translate')) {
       chrome.storage.sync.set({
         toLanguage: toLanguage,
