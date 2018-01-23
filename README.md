@@ -11,6 +11,9 @@ windows:
   * Alt + 1: translator selected text from auto to chinese language.
   * Alt + 2: translator selected text from auto to english language.
   * Alt + 3: clear text which is translate text.
+
+
+
 macOS:
   hot key:
   * macCtrl + 1: translator selected text from auto to chinese language.
