@@ -170,7 +170,21 @@
 
 
     });
-  }
+  };
+  var domClassName = 'goodTranslatePlugin';
+  var showText = (parent, text) => {
+
+    var descriptionDom = document.createElement('div');
+    descriptionDom.style.color = 'red';
+    descriptionDom.classList.add(domClassName);
+    descriptionDom.innerHTML = text;
+    parent.appendChild(descriptionDom);
+
+  };
+
+  var clearText = function() {
+    var texts = document.querySelectorAll(domClassName);
+  };
 
 
   var originText = '';
@@ -192,10 +206,7 @@
       });
       console.log();
 
-      var descriptionDom = document.createElement('div');
-      descriptionDom.style.color = 'red';
-      descriptionDom.innerHTML = ansText;
-      window.getSelection().baseNode.parentElement.appendChild(descriptionDom);
+      showText(window.getSelection().baseNode.parentElement, ansText);
     });
   });
 })();
