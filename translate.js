@@ -183,7 +183,7 @@
   };
 
   var clearText = function() {
-    var texts = document.querySelectorAll(domClassName);
+    var texts = document.querySelectorAll('.'+domClassName);
     for (var textItem = 0;textItem < texts.length;textItem++) {
       texts[textItem].remove();
     }

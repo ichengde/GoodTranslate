@@ -13,15 +13,13 @@
       toLanguage = 'clear';
     }
 
-    if (command.includes('translate')) {
-      chrome.storage.sync.set({
-        toLanguage: toLanguage,
-      }, function() {
-        chrome.tabs.executeScript(null,{
-          file: "translate.js"
-        });
+    chrome.storage.sync.set({
+      toLanguage: toLanguage,
+    }, function() {
+      chrome.tabs.executeScript(null,{
+        file: "translate.js"
       });
-    }
+    });
   }
   chrome.commands.onCommand.addListener(handle);
 })();
