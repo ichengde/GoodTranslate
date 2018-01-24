@@ -182,7 +182,7 @@
 
   };
 
-  var clearText = function() {
+  var cleanText = function() {
     var texts = document.querySelectorAll('.'+domClassName);
     for (var textItem = 0;textItem < texts.length;textItem++) {
       texts[textItem].remove();
@@ -197,8 +197,8 @@
   chrome.storage.sync.get({
     toLanguage: 'en'
   }, function(storage) {
-    if (storage.toLanguage === 'clear') {
-      clearText();
+    if (storage.toLanguage === 'clean') {
+      cleanText();
       return;
     }
     getTKK().then(() => {

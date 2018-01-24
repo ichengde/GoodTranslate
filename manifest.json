@@ -26,12 +26,12 @@
       },
       "description": "translate-en"
     },
-    "clear": {
+    "clean": {
       "suggested_key": {
         "default": "Alt+3",
         "mac": "MacCtrl+3"
       },
-      "description": "clear"
+      "description": "clean"
     }
 
   },

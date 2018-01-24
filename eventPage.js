@@ -9,8 +9,8 @@
       toLanguage = 'en';
     }
 
-    if (command === 'clear') {
-      toLanguage = 'clear';
+    if (command === 'clean') {
+      toLanguage = 'clean';
     }
 
     chrome.storage.sync.set({
