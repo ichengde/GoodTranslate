@@ -11,7 +11,7 @@ windows:
   * Alt + 1: translator selected text from auto to chinese language.
   * Alt + 2: translator selected text from auto to english language.
   * Alt + 3: delete text which is translate text.
-  * Alt + 4: open translate.google.cn website.
+  * Alt + 4: open translate.google.cn website.
 
 
 
@@ -20,5 +20,5 @@ macOS:
   * macCtrl + 1: translator selected text from auto to chinese language.
   * macCtrl + 2: translator selected text from auto to english language.
   * macCtrl + 4: delete text which is translate text.
-  * macCtrl + 4: open translate.google.cn website.
+  * macCtrl + 4: open translate.google.cn website.
 
