@@ -201,6 +201,12 @@
       deleteText();
       return;
     }
+    if (storage.toLanguage === 'open') {
+      chrome.browser.openTab({url: 'https://translate.google.cn'});
+      return;
+    }
+
+
     getTKK().then(() => {
       return translate(originText, storage.toLanguage, wq(originText))
     }).then(ans=>{

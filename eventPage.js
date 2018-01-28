@@ -13,6 +13,10 @@
       toLanguage = 'delete';
     }
 
+    if (command === 'open') {
+      toLanguage = 'open';
+    }
+
     chrome.storage.sync.set({
       toLanguage: toLanguage,
     }, function() {
