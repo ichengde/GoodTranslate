@@ -12,6 +12,7 @@ windows:
   * Alt + 2: translator selected text from auto to english language.
   * Alt + 3: delete text which is translate text.
   * Alt + 4: open translate.google.cn website.
+  * Alt + q: look up the word.
 
 
 
@@ -21,4 +22,5 @@ macOS:
   * macCtrl + 2: translator selected text from auto to english language.
   * macCtrl + 4: delete text which is translate text.
   * macCtrl + 4: open translate.google.cn website.
+  * macCtrl + q: look up the word.
 
